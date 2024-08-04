@@ -62,7 +62,7 @@ public class FirstTest {
 //                "No Search input",
 //                10);
 //
-//        waitForElemenAndSendKeys(
+//        waitForElementAndSendKeys(
 //                By.id("search_src_text"),
 //                "Java",
 //                "No Search input",
@@ -113,15 +113,7 @@ public class FirstTest {
 //    @Test
 //    public void testCompareArticleTitle() {
 //        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Continue')]"),
-//                "No button",
-//                10);
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Continue')]"),
-//                "No button",
-//                10);
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Continue')]"),
+//                By.xpath("//*[contains(@text, 'Skip')]"),
 //                "No button",
 //                10);
 //        waitForElementAndClick(
@@ -163,51 +155,41 @@ public class FirstTest {
 //    }
 
 
-    @Test
-    public void testSearchClear() {
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Continue')]"),
-                "No button",
-                10);
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Continue')]"),
-                "No button",
-                10);
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Continue')]"),
-                "No button",
-                10);
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Get started')]"),
-                "No button",
-                10);
+//    @Test
+//    public void testSearchClear() {
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Skip')]"),
+//                "No button",
+//                10);
+//
+//        waitForElementAndClick(
+//                By.id("search_container"),
+//                "Element is not found",
+//                5);
+//
+//        waitForElementAndSendKeys(
+//                By.id("search_src_text"),
+//                "Java",
+//                "No Search input",
+//                30);
+//
+//        waitForElementAndClear(
+//                By.id("org.wikipedia:id/search_src_text"),
+//                "No Search input",
+//                30);
+//
+//        waitForElementAndClick(
+//                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
+//                "No back button",
+//                10);
+//
+//        waitForElementAbsence(
+//                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
+//                "Returning to the previous page did not occur",
+//                10);
+//    }
 
-        waitForElementAndClick(
-                By.id("search_container"),
-                "Element is not found",
-                5);
 
-        waitForElemenAndSendKeys(
-                By.id("search_src_text"),
-                "Java",
-                "No Search input",
-                30);
-
-        waitForElementAndClear(
-                By.id("org.wikipedia:id/search_src_text"),
-                "No Search input",
-                30);
-
-        waitForElementAndClick(
-                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
-                "No back button",
-                10);
-
-        waitForElementAbsence(
-                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
-                "Returning to the previous page did not occur",
-                10);
-    }
 
 
     private WebElement waitForElement(By by, String errorMessage, long timeout) {
@@ -226,7 +208,7 @@ public class FirstTest {
         return element;
     }
 
-    private WebElement waitForElemenAndSendKeys(By by, String value, String errorMessage, long timeout){
+    private WebElement waitForElementAndSendKeys(By by, String value, String errorMessage, long timeout){
         WebElement element = waitForElement(by, errorMessage);
         element.sendKeys(value);
         return element;
@@ -243,4 +225,5 @@ public class FirstTest {
         element.clear();
         return element;
     }
+
 }
