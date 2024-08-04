@@ -204,6 +204,42 @@ public class FirstTest {
         );
     }
 
+    @Test
+    public void testSearchAndCancelResult() {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Skip')]"),
+                "No button",
+                10);
+
+        waitForElementAndClick(
+                By.id("search_container"),
+                "Element is not found",
+                5);
+
+        waitForElementAndSendKeys(
+                By.id("search_src_text"),
+                "Java",
+                "No Search input",
+                30);
+
+        assertElementHasText(
+                By.id("page_list_item_title"),
+                "Java",
+                "Text was not found",
+                10
+        );
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
+                "No back button",
+                10);
+
+        waitForElementAbsence(
+                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
+                "Returning to the previous page did not occur",
+                10);
+    }
+
 
     private WebElement waitForElement(By by, String errorMessage, long timeout) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
