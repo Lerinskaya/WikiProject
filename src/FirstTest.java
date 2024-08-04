@@ -189,7 +189,20 @@ public class FirstTest {
 //                10);
 //    }
 
+    @Test
+    public void testInputContainsText() {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Skip')]"),
+                "No button",
+                10);
 
+        assertElementHasText(
+                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/androidx.viewpager.widget.ViewPager/androidx.recyclerview.widget.RecyclerView/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout/androidx.cardview.widget.CardView/android.widget.TextView"),
+                "Search Wikipedia",
+                "Text was not found",
+                10
+        );
+    }
 
 
     private WebElement waitForElement(By by, String errorMessage, long timeout) {
@@ -226,4 +239,10 @@ public class FirstTest {
         return element;
     }
 
+    public WebElement assertElementHasText(By by, String expectedText, String errorMessage, long timeout) {
+        WebElement element = waitForElement(by, errorMessage, timeout);
+        String actualText = element.getText();
+        Assert.assertEquals(errorMessage, expectedText, actualText);
+        return element;
+    }
 }
