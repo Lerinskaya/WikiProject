@@ -240,6 +240,34 @@ public class FirstTest {
                 10);
     }
 
+    @Test
+    public void testSearchAndVerifyResults() {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Skip')]"),
+                "No Skip button found",
+                10);
+
+        waitForElementAndClick(
+                By.id("search_container"),
+                "Search container not found",
+                5);
+
+        waitForElementAndSendKeys(
+                By.id("search_src_text"),
+                "Java",
+                "Search input not found",
+                30);
+
+        List<WebElement> searchResults = driver.findElements(By.id("page_list_item_title"));
+
+        Assert.assertFalse("Search results not found", searchResults.isEmpty());
+
+        for (WebElement result : searchResults) {
+            String resultText = result.getText().toLowerCase();
+            Assert.assertTrue("Search result does not contain 'Java'", resultText.contains("java"));
+        }
+    }
+
 
     private WebElement waitForElement(By by, String errorMessage, long timeout) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
