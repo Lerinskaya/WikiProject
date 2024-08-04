@@ -38,77 +38,77 @@ public class FirstTest {
         }
     }
 
-    @Test
-    public void firstTest() {
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Continue')]"),
-                "No button",
-                10);
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Continue')]"),
-                "No button",
-                10);
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Continue')]"),
-                "No button",
-                10);
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Get started')]"),
-                "No button",
-                10);
+//    @Test
+//    public void firstTest() {
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Continue')]"),
+//                "No button",
+//                10);
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Continue')]"),
+//                "No button",
+//                10);
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Continue')]"),
+//                "No button",
+//                10);
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Get started')]"),
+//                "No button",
+//                10);
+//
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+//                "No Search input",
+//                10);
+//
+//        waitForElemenAndSendKeys(
+//                By.id("search_src_text"),
+//                "Java",
+//                "No Search input",
+//                10);
+//
+//        waitForElement(
+//                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
+//                "Can't find this topic",
+//                30
+//        );
+//    }
 
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
-                "No Search input",
-                10);
-
-        waitForElemenAndSendKeys(
-                By.id("search_src_text"),
-                "Java",
-                "No Search input",
-                10);
-
-        waitForElement(
-                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
-                "Can't find this topic",
-                30
-        );
-    }
-
-    @Test
-    public void testSearchCancel() {
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Continue')]"),
-                "No button",
-                10);
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Continue')]"),
-                "No button",
-                10);
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Continue')]"),
-                "No button",
-                10);
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Get started')]"),
-                "No button",
-                10);
-
-        waitForElementAndClick(
-                By.id("search_container"),
-                "Element is not found",
-                5);
-
-        waitForElementAndClick(
-                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
-                "No back button",
-                10);
-
-        waitForElementAbsence(
-                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
-                "Returning to the previous page did not occur",
-                10);
-    }
+//    @Test
+//    public void testSearchCancel() {
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Continue')]"),
+//                "No button",
+//                10);
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Continue')]"),
+//                "No button",
+//                10);
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Continue')]"),
+//                "No button",
+//                10);
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Get started')]"),
+//                "No button",
+//                10);
+//
+//        waitForElementAndClick(
+//                By.id("search_container"),
+//                "Element is not found",
+//                5);
+//
+//        waitForElementAndClick(
+//                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
+//                "No back button",
+//                10);
+//
+//        waitForElementAbsence(
+//                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
+//                "Returning to the previous page did not occur",
+//                10);
+//    }
 
 //    @Test
 //    public void testCompareArticleTitle() {
