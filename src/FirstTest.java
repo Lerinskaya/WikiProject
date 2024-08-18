@@ -472,7 +472,7 @@ public class FirstTest {
 //    }
 
     @Test
-    public void saveArticle() {
+    public void testSaveArticles() {
 
         String folderName = "Articles";
         String firstArticleTitle = "Java (programming language)";
