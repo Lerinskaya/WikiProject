@@ -618,7 +618,35 @@ public class FirstTest {
 //        );
 //    }
 
+    @Test
+    public void testAssertTitle() {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Skip')]"),
+                "No button",
+                10);
 
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "No Search input",
+                10);
+
+        waitForElementAndSendKeys(
+                By.id("search_src_text"),
+                "Java",
+                "No Search input",
+                10);
+
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
+                "Can't find this topic",
+                30
+        );
+
+        assertElementPresent(
+                By.id("pcs-edit-section-title-description"),
+                "Title element is not present on the page"
+        );
+    }
 
     private WebElement waitForElement(By by, String errorMessage, long timeout) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
