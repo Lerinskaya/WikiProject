@@ -751,5 +751,11 @@ public class FirstTest {
         }
     }
 
-
+    private void assertElementPresent(By by, String errorMessage) {
+        int amountOfElements = getAmountOfElements(by);
+        if (amountOfElements == 0) {
+            String defaultMessage = "An element '" +by.toString() +" ' suppose to be present";
+            throw new AssertionError(defaultMessage + " " + errorMessage);
+        }
+    }
 }
