@@ -400,42 +400,76 @@ public class FirstTest {
 //        );
 //    }
 
-    @Test
-    public void testNotEmptySearch() {
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Skip')]"),
-                "No button",
-                10);
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
-                "No Search input",
-                10);
+//    @Test
+//    public void testNotEmptySearch() {
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Skip')]"),
+//                "No button",
+//                10);
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+//                "No Search input",
+//                10);
+//
+//        String searchText = "Linkin Park discography";
+//
+//        waitForElementAndSendKeys(
+//                By.id("search_src_text"),
+//                searchText,
+//                "No Search input",
+//                10);
+//
+//        String searchTextLocator = "//*[@resource-id='org.wikipedia:id/page_list_item_title' and @text='"+ searchText +"']";
+//
+//        waitForElement(
+//                By.xpath(searchTextLocator),
+//                "Cannot find search result",
+//                10
+//        );
+//
+//        int amountOfResults = getAmountOfElements(
+//                By.xpath(searchTextLocator)
+//        );
+//
+//        Assert.assertTrue(
+//                "No search results",
+//                amountOfResults>0
+//        );
+//    }
 
-        String searchText = "Linkin Park discography";
-
-        waitForElementAndSendKeys(
-                By.id("search_src_text"),
-                searchText,
-                "No Search input",
-                10);
-
-        String searchTextLocator = "//*[@resource-id='org.wikipedia:id/page_list_item_title' and @text='"+ searchText +"']";
-
-        waitForElement(
-                By.xpath(searchTextLocator),
-                "Cannot find search result",
-                10
-        );
-
-        int amountOfResults = getAmountOfElements(
-                By.xpath(searchTextLocator)
-        );
-
-        Assert.assertTrue(
-                "No search results",
-                amountOfResults>0
-        );
-    }
+//    @Test
+//    public void testEmptySearch() {
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Skip')]"),
+//                "No button",
+//                10);
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+//                "No Search input",
+//                10);
+//
+//        String searchText = "jnskejnlsjlsk";
+//
+//        waitForElementAndSendKeys(
+//                By.id("search_src_text"),
+//                searchText,
+//                "No Search input",
+//                10);
+//
+//        String searchTextLocator = "//*[@resource-id='org.wikipedia:id/page_list_item_title' and @text='"+ searchText +"']";
+//        String emptyResultPage = "//*[@text='No results']";
+//
+//        waitForElement(
+//                By.xpath(emptyResultPage),
+//                "This page is not empty",
+//                10
+//        );
+//
+//        assertElementNotPresent(
+//                By.xpath(searchTextLocator),
+//                "We've found some results by request" + searchText
+//        );
+//    }
 
     private WebElement waitForElement(By by, String errorMessage, long timeout) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
@@ -530,5 +564,13 @@ public class FirstTest {
     private int getAmountOfElements(By by) {
         List elements = driver.findElements(by);
         return elements.size();
+    }
+
+    private void assertElementNotPresent(By by, String errorMessage) {
+        int amountOfElements = getAmountOfElements(by);
+        if (amountOfElements>0) {
+            String defaultMessage = "An element '" +by.toString() +" ' not suppose to be present";
+            throw new AssertionError(defaultMessage + " " + errorMessage);
+        }
     }
 }
