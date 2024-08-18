@@ -303,8 +303,105 @@ public class FirstTest {
 //        );
 //    }
 
+//    @Test
+//    public void saveArticle() {
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Skip')]"),
+//                "No button",
+//                10);
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+//                "No Search input",
+//                10);
+//
+//        waitForElementAndSendKeys(
+//                By.id("search_src_text"),
+//                "Java",
+//                "No Search input",
+//                10);
+//
+//        waitForElementAndClick(
+//                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
+//                "Can't find this topic",
+//                30
+//        );
+//
+//        waitForElement(
+//                By.xpath("//android.view.View[@content-desc=\"Object-oriented programming language\"]"),
+//                "Can't find this topic",
+//                100
+//        );
+//
+//        waitForElementAndClick(
+//                By.id("org.wikipedia:id/page_save"),
+//                "Save option not found",
+//                5
+//        );
+//
+//        waitForElementAndClick(
+//                By.id("org.wikipedia:id/snackbar_action"),
+//                "List button not found",
+//                5
+//        );
+//
+//        waitForElementAndClick(
+//                By.id("org.wikipedia:id/text_input"),
+//                "Search input not found",
+//                5
+//        );
+//
+//        String folderName = "Articles";
+//
+//        waitForElementAndSendKeys(
+//                By.id("org.wikipedia:id/text_input"),
+//                folderName,
+//                "Search input not found",
+//                10);
+//
+//        waitForElementAndClick(
+//                By.id("android:id/button1"),
+//                "Ok button not found",
+//                5
+//        );
+//
+//        waitForElementAndClick(
+//                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
+//                "No back button",
+//                10
+//        );
+//
+//        waitForElementAndClick(
+//                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
+//                "No back button",
+//                10
+//        );
+//
+//        waitForElementAndClick(
+//                By.id("org.wikipedia:id/nav_tab_reading_lists"),
+//                "Save option not found",
+//                5
+//        );
+//
+//        waitForElementAndClick(
+//                By.xpath("//*[@text='"+ folderName +"']"),
+//                "Reading list not found",
+//                5
+//        );
+//
+//        swipeElementToLeft(
+//                By.xpath("//*[@text='Java (programming language)']"),
+//                "Article not found"
+//        );
+//
+//        waitForElementAbsence(
+//                By.xpath("//*[@text='Java (programming language)']"),
+//                "Cannot delete this article",
+//                10
+//        );
+//    }
+
     @Test
-    public void saveArticle() {
+    public void testNotEmptySearch() {
         waitForElementAndClick(
                 By.xpath("//*[contains(@text, 'Skip')]"),
                 "No button",
@@ -314,89 +411,29 @@ public class FirstTest {
                 "No Search input",
                 10);
 
+        String searchText = "Linkin Park discography";
+
         waitForElementAndSendKeys(
                 By.id("search_src_text"),
-                "Java",
+                searchText,
                 "No Search input",
                 10);
 
-        waitForElementAndClick(
-                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
-                "Can't find this topic",
-                30
-        );
+        String searchTextLocator = "//*[@resource-id='org.wikipedia:id/page_list_item_title' and @text='"+ searchText +"']";
 
         waitForElement(
-                By.xpath("//android.view.View[@content-desc=\"Object-oriented programming language\"]"),
-                "Can't find this topic",
-                100
-        );
-
-        waitForElementAndClick(
-                By.id("org.wikipedia:id/page_save"),
-                "Save option not found",
-                5
-        );
-
-        waitForElementAndClick(
-                By.id("org.wikipedia:id/snackbar_action"),
-                "List button not found",
-                5
-        );
-
-        waitForElementAndClick(
-                By.id("org.wikipedia:id/text_input"),
-                "Search input not found",
-                5
-        );
-
-        String folderName = "Articles";
-
-        waitForElementAndSendKeys(
-                By.id("org.wikipedia:id/text_input"),
-                folderName,
-                "Search input not found",
-                10);
-
-        waitForElementAndClick(
-                By.id("android:id/button1"),
-                "Ok button not found",
-                5
-        );
-
-        waitForElementAndClick(
-                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
-                "No back button",
+                By.xpath(searchTextLocator),
+                "Cannot find search result",
                 10
         );
 
-        waitForElementAndClick(
-                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
-                "No back button",
-                10
+        int amountOfResults = getAmountOfElements(
+                By.xpath(searchTextLocator)
         );
 
-        waitForElementAndClick(
-                By.id("org.wikipedia:id/nav_tab_reading_lists"),
-                "Save option not found",
-                5
-        );
-
-        waitForElementAndClick(
-                By.xpath("//*[@text='"+ folderName +"']"),
-                "Reading list not found",
-                5
-        );
-
-        swipeElementToLeft(
-                By.xpath("//*[@text='Java (programming language)']"),
-                "Article not found"
-        );
-
-        waitForElementAbsence(
-                By.xpath("//*[@text='Java (programming language)']"),
-                "Cannot delete this article",
-                10
+        Assert.assertTrue(
+                "No search results",
+                amountOfResults>0
         );
     }
 
@@ -488,5 +525,10 @@ public class FirstTest {
                 .release()
                 .perform();
 
+    }
+
+    private int getAmountOfElements(By by) {
+        List elements = driver.findElements(by);
+        return elements.size();
     }
 }
