@@ -601,7 +601,7 @@ public class FirstTest {
 //                10
 //        );
 //
-//        assertElementIsPresent(
+//        assertElementPresent(
 //                By.xpath("//*[@text='"+ secondArticleTitle +"']"),
 //                "List is empty"
 //        );
@@ -612,7 +612,7 @@ public class FirstTest {
 //                5
 //        );
 //
-//        assertElementIsPresent(
+//        assertElementPresent(
 //                By.xpath("//*[@text='"+ secondArticleTitle +"']"),
 //                "Title doesn't match"
 //        );
@@ -751,11 +751,5 @@ public class FirstTest {
         }
     }
 
-    private void assertElementPresent(By by, String errorMessage) {
-        int amountOfElements = getAmountOfElements(by);
-        if (amountOfElements == 0) {
-            String defaultMessage = "An element '" +by.toString() +" ' suppose to be present";
-            throw new AssertionError(defaultMessage + " " + errorMessage);
-        }
-    }
+
 }
