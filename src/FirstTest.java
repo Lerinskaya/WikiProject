@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -618,8 +619,38 @@ public class FirstTest {
 //        );
 //    }
 
+//    @Test
+//    public void testAssertTitle() {
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Skip')]"),
+//                "No button",
+//                10);
+//
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+//                "No Search input",
+//                10);
+//
+//        waitForElementAndSendKeys(
+//                By.id("search_src_text"),
+//                "Java",
+//                "No Search input",
+//                10);
+//
+//        waitForElementAndClick(
+//                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
+//                "Can't find this topic",
+//                30
+//        );
+//
+//        assertElementPresent(
+//                By.id("pcs-edit-section-title-description"),
+//                "Title element is not present on the page"
+//        );
+//    }
+
     @Test
-    public void testAssertTitle() {
+    public void testChangeScreenOrientation() {
         waitForElementAndClick(
                 By.xpath("//*[contains(@text, 'Skip')]"),
                 "No button",
@@ -630,21 +661,55 @@ public class FirstTest {
                 "No Search input",
                 10);
 
+        String searchText = "Java";
+
         waitForElementAndSendKeys(
                 By.id("search_src_text"),
-                "Java",
+                searchText,
                 "No Search input",
                 10);
 
         waitForElementAndClick(
                 By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
-                "Can't find this topic",
+                "Can't find this topic: " + searchText,
                 30
         );
 
-        assertElementPresent(
+        String title_before_rotation = waitForElementAndGetAttribute(
                 By.id("pcs-edit-section-title-description"),
-                "Title element is not present on the page"
+                "text",
+                "Cannot find title description",
+                5
+        );
+
+        driver.rotate(ScreenOrientation.LANDSCAPE);
+
+        String title_after_rotation = waitForElementAndGetAttribute(
+                By.id("pcs-edit-section-title-description"),
+                "text",
+                "Cannot find title description",
+                5
+        );
+
+        Assert.assertEquals(
+                "Title descriptions aren't equal after rotation",
+                title_before_rotation,
+                title_after_rotation
+        );
+
+        driver.rotate(ScreenOrientation.PORTRAIT);
+
+        String title_after_second_rotation = waitForElementAndGetAttribute(
+                By.id("pcs-edit-section-title-description"),
+                "text",
+                "Cannot find title description",
+                5
+        );
+
+        Assert.assertEquals(
+                "Title descriptions aren't equal after rotation",
+                title_before_rotation,
+                title_after_second_rotation
         );
     }
 
@@ -757,5 +822,10 @@ public class FirstTest {
             String defaultMessage = "An element '" +by.toString() +" ' suppose to be present";
             throw new AssertionError(defaultMessage + " " + errorMessage);
         }
+    }
+
+    private String waitForElementAndGetAttribute(By by, String attribute, String errorMessage, long timeout) {
+        WebElement element = waitForElement(by, errorMessage, timeout);
+        return element.getAttribute(attribute);
     }
 }
