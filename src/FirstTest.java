@@ -651,8 +651,72 @@ public class FirstTest {
 //        );
 //    }
 
+//    @Test
+//    public void testChangeScreenOrientation() {
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Skip')]"),
+//                "No button",
+//                10);
+//
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+//                "No Search input",
+//                10);
+//
+//        String searchText = "Java";
+//
+//        waitForElementAndSendKeys(
+//                By.id("search_src_text"),
+//                searchText,
+//                "No Search input",
+//                10);
+//
+//        waitForElementAndClick(
+//                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
+//                "Can't find this topic: " + searchText,
+//                30
+//        );
+//
+//        String title_before_rotation = waitForElementAndGetAttribute(
+//                By.id("pcs-edit-section-title-description"),
+//                "text",
+//                "Cannot find title description",
+//                5
+//        );
+//
+//        driver.rotate(ScreenOrientation.LANDSCAPE);
+//
+//        String title_after_rotation = waitForElementAndGetAttribute(
+//                By.id("pcs-edit-section-title-description"),
+//                "text",
+//                "Cannot find title description",
+//                5
+//        );
+//
+//        Assert.assertEquals(
+//                "Title descriptions aren't equal after rotation",
+//                title_before_rotation,
+//                title_after_rotation
+//        );
+//
+//        driver.rotate(ScreenOrientation.PORTRAIT);
+//
+//        String title_after_second_rotation = waitForElementAndGetAttribute(
+//                By.id("pcs-edit-section-title-description"),
+//                "text",
+//                "Cannot find title description",
+//                5
+//        );
+//
+//        Assert.assertEquals(
+//                "Title descriptions aren't equal after rotation",
+//                title_before_rotation,
+//                title_after_second_rotation
+//        );
+//    }
+
     @Test
-    public void testChangeScreenOrientation() {
+    public void testSearchAfterBackground() throws InterruptedException {
         waitForElementAndClick(
                 By.xpath("//*[contains(@text, 'Skip')]"),
                 "No button",
@@ -671,47 +735,24 @@ public class FirstTest {
                 "No Search input",
                 10);
 
-        waitForElementAndClick(
+        waitForElement(
                 By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
                 "Can't find this topic: " + searchText,
                 30
         );
 
-        String title_before_rotation = waitForElementAndGetAttribute(
-                By.id("pcs-edit-section-title-description"),
-                "text",
-                "Cannot find title description",
-                5
+        driver.runAppInBackground(5);
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
+                "No back button",
+                10
         );
 
-        driver.rotate(ScreenOrientation.LANDSCAPE);
-
-        String title_after_rotation = waitForElementAndGetAttribute(
-                By.id("pcs-edit-section-title-description"),
-                "text",
-                "Cannot find title description",
-                5
-        );
-
-        Assert.assertEquals(
-                "Title descriptions aren't equal after rotation",
-                title_before_rotation,
-                title_after_rotation
-        );
-
-        driver.rotate(ScreenOrientation.PORTRAIT);
-
-        String title_after_second_rotation = waitForElementAndGetAttribute(
-                By.id("pcs-edit-section-title-description"),
-                "text",
-                "Cannot find title description",
-                5
-        );
-
-        Assert.assertEquals(
-                "Title descriptions aren't equal after rotation",
-                title_before_rotation,
-                title_after_second_rotation
+        waitForElement(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
+                "Can't find this topic: " + searchText + " after background",
+                30
         );
     }
 
