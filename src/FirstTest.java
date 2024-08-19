@@ -36,6 +36,8 @@ public class FirstTest {
 
     @After
     public void tearDown() {
+        driver.rotate(ScreenOrientation.PORTRAIT);
+
         if (driver != null) {
             driver.quit();
         }
