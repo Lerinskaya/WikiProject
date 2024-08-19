@@ -1,46 +1,23 @@
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.android.AndroidDriver;
-import org.junit.After;
+import lib.CoreTestCase;
+import lib.ui.MainPageObject;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.net.URL;
 import java.util.List;
 
-public class FirstTest {
+public class testSearch extends CoreTestCase {
 
-    private AppiumDriver<WebElement> driver;
+    private MainPageObject MainPageObject;
 
-    @Before
-    public void setUp() throws Exception {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("platformName", "Android");
-        capabilities.setCapability("deviceName", "AndroidTestDevice");
-        capabilities.setCapability("platformVersion", "8.0");
-        capabilities.setCapability("automationName", "Appium");
-        capabilities.setCapability("appPackage", "org.wikipedia");
-        capabilities.setCapability("appActivity", ".main.MainActivity");
-        capabilities.setCapability("app", "D:/AppiumWiki/WikiProject/apks/org.wikipedia.apk");
+    protected void setUp() throws Exception {
+        super.setUp();
 
-        driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-    }
-
-    @After
-    public void tearDown() {
-        driver.rotate(ScreenOrientation.PORTRAIT);
-
-        if (driver != null) {
-            driver.quit();
-        }
+        MainPageObject = new MainPageObject(driver);
     }
 
 //    @Test
@@ -717,25 +694,25 @@ public class FirstTest {
 
     @Test
     public void testSearchAfterBackground() throws InterruptedException {
-        waitForElementAndClick(
+        MainPageObject.waitForElementAndClick(
                 By.xpath("//*[contains(@text, 'Skip')]"),
                 "No button",
                 10);
 
-        waitForElementAndClick(
+        MainPageObject.waitForElementAndClick(
                 By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
                 "No Search input",
                 10);
 
         String searchText = "Java";
 
-        waitForElementAndSendKeys(
+        MainPageObject.waitForElementAndSendKeys(
                 By.id("search_src_text"),
                 searchText,
                 "No Search input",
                 10);
 
-        waitForElement(
+        MainPageObject.waitForElement(
                 By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
                 "Can't find this topic: " + searchText,
                 30
@@ -743,132 +720,16 @@ public class FirstTest {
 
         driver.runAppInBackground(5);
 
-        waitForElementAndClick(
+        MainPageObject.waitForElementAndClick(
                 By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
                 "No back button",
                 10
         );
 
-        waitForElement(
+        MainPageObject.waitForElement(
                 By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
                 "Can't find this topic: " + searchText + " after background",
                 30
         );
-    }
-
-    private WebElement waitForElement(By by, String errorMessage, long timeout) {
-        WebDriverWait wait = new WebDriverWait(driver, timeout);
-        wait.withMessage(errorMessage + "\n");
-        return wait.until(ExpectedConditions.presenceOfElementLocated(by));
-    }
-
-    private WebElement waitForElement(By by, String errorMessage) {
-        return waitForElement(by, errorMessage, 3);
-    }
-
-    private WebElement waitForElementAndClick(By by, String errorMessage, long timeout){
-        WebElement element = waitForElement(by, errorMessage, timeout);
-        element.click();
-        return element;
-    }
-
-    private WebElement waitForElementAndSendKeys(By by, String value, String errorMessage, long timeout){
-        WebElement element = waitForElement(by, errorMessage);
-        element.sendKeys(value);
-        return element;
-    }
-
-    private boolean waitForElementAbsence(By by, String errorMessage, long timeout) {
-        WebDriverWait wait = new WebDriverWait(driver, timeout);
-        wait.withMessage(errorMessage + "\n");
-        return wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
-    }
-
-    private WebElement waitForElementAndClear(By by, String errorMessage, long timeout){
-        WebElement element = waitForElement(by, errorMessage);
-        element.clear();
-        return element;
-    }
-
-    public WebElement assertElementHasText(By by, String expectedText, String errorMessage, long timeout) {
-        WebElement element = waitForElement(by, errorMessage, timeout);
-        String actualText = element.getText();
-        Assert.assertEquals(errorMessage, expectedText, actualText);
-        return element;
-    }
-
-    protected void swipeUp(int timeOfSwipe){
-        TouchAction action = new TouchAction(driver);
-        Dimension size = driver.manage().window().getSize();
-        int x = size.width/2;
-        int start_y = (int) (size.height*0.7);
-        int end_y = (int) (size.height*0.3);
-        action
-                .press(x, start_y)
-                .waitAction(timeOfSwipe)
-                .moveTo(x, end_y)
-                .release()
-                .perform();
-    }
-
-    protected void swipeUpQuick(){
-        swipeUp(200);
-    }
-
-    protected void swipeUpToFindElement(By by, String errorMessage, int maxSwipes){
-        int swipes = 0;
-        while (driver.findElements(by).isEmpty()) {
-            if (swipes>maxSwipes) {
-                waitForElement(by, "Cannot find element by swiping. " + errorMessage);
-                return;
-            }
-            swipeUpQuick();
-            ++swipes;
-        }
-    }
-
-    protected void swipeElementToLeft(By by, String errorMessage) {
-        WebElement element = waitForElement(by, errorMessage);
-        int left_x = element.getLocation().getX();
-        int right_x = left_x + element.getSize().getWidth();
-
-        int upper_y = element.getLocation().getY();
-        int lower_x = upper_y + element.getSize().getHeight();
-        int middle_y = (upper_y + lower_x)/2;
-
-        TouchAction action = new TouchAction(driver);
-        action
-                .press(right_x, middle_y)
-                .waitAction(150)
-                .moveTo(left_x, middle_y)
-                .release()
-                .perform();
-
-    }
-
-    private int getAmountOfElements(By by) {
-        List elements = driver.findElements(by);
-        return elements.size();
-    }
-
-    private void assertElementNotPresent(By by, String errorMessage) {
-        int amountOfElements = getAmountOfElements(by);
-        if (amountOfElements>0) {
-            String defaultMessage = "An element '" +by.toString() +" ' not suppose to be present";
-            throw new AssertionError(defaultMessage + " " + errorMessage);
-        }
-    }
-
-    private void assertElementPresent(By by, String errorMessage) {
-        int amountOfElements = getAmountOfElements(by);
-        if (amountOfElements == 0) {
-            String defaultMessage = "An element '" +by.toString() +" ' suppose to be present";
-            throw new AssertionError(defaultMessage + " " + errorMessage);
-        }
-    }
-
-    private String waitForElementAndGetAttribute(By by, String attribute, String errorMessage, long timeout) {
-        WebElement element = waitForElement(by, errorMessage, timeout);
-        return element.getAttribute(attribute);
     }
 }
