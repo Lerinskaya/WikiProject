@@ -1,5 +1,6 @@
 import lib.CoreTestCase;
 import lib.ui.MainPageObject;
+import lib.ui.SearchPageObject;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -20,77 +21,25 @@ public class testSearch extends CoreTestCase {
         MainPageObject = new MainPageObject(driver);
     }
 
-//    @Test
-//    public void firstTest() {
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Continue')]"),
-//                "No button",
-//                10);
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Continue')]"),
-//                "No button",
-//                10);
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Continue')]"),
-//                "No button",
-//                10);
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Get started')]"),
-//                "No button",
-//                10);
-//
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
-//                "No Search input",
-//                10);
-//
-//        waitForElementAndSendKeys(
-//                By.id("search_src_text"),
-//                "Java",
-//                "No Search input",
-//                10);
-//
-//        waitForElement(
-//                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
-//                "Can't find this topic",
-//                30
-//        );
-//    }
+    @Test
+    public void testSearch() {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject.clickSkipButton();
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.waitForSearchResult("Object-oriented programming language");
+    }
 
-//    @Test
-//    public void testSearchCancel() {
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Continue')]"),
-//                "No button",
-//                10);
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Continue')]"),
-//                "No button",
-//                10);
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Continue')]"),
-//                "No button",
-//                10);
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Get started')]"),
-//                "No button",
-//                10);
-//
-//        waitForElementAndClick(
-//                By.id("search_container"),
-//                "Element is not found",
-//                5);
-//
-//        waitForElementAndClick(
-//                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
-//                "No back button",
-//                10);
-//
-//        waitForElementAbsence(
-//                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
-//                "Returning to the previous page did not occur",
-//                10);
-//    }
+    @Test
+    public void testSearchCancel() {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject.clickSkipButton();
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.waitForCancelButtonToAppear();
+        SearchPageObject.clickCancelButton();
+        SearchPageObject.waitForCancelButtonToDisappear();
+    }
 
 //    @Test
 //    public void testCompareArticleTitle() {
@@ -692,44 +641,44 @@ public class testSearch extends CoreTestCase {
 //        );
 //    }
 
-    @Test
-    public void testSearchAfterBackground() throws InterruptedException {
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Skip')]"),
-                "No button",
-                10);
-
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
-                "No Search input",
-                10);
-
-        String searchText = "Java";
-
-        MainPageObject.waitForElementAndSendKeys(
-                By.id("search_src_text"),
-                searchText,
-                "No Search input",
-                10);
-
-        MainPageObject.waitForElement(
-                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
-                "Can't find this topic: " + searchText,
-                30
-        );
-
-        driver.runAppInBackground(5);
-
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
-                "No back button",
-                10
-        );
-
-        MainPageObject.waitForElement(
-                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
-                "Can't find this topic: " + searchText + " after background",
-                30
-        );
-    }
+//    @Test
+//    public void testSearchAfterBackground() throws InterruptedException {
+//        MainPageObject.waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Skip')]"),
+//                "No button",
+//                10);
+//
+//        MainPageObject.waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+//                "No Search input",
+//                10);
+//
+//        String searchText = "Java";
+//
+//        MainPageObject.waitForElementAndSendKeys(
+//                By.id("search_src_text"),
+//                searchText,
+//                "No Search input",
+//                10);
+//
+//        MainPageObject.waitForElement(
+//                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
+//                "Can't find this topic: " + searchText,
+//                30
+//        );
+//
+//        driver.runAppInBackground(5);
+//
+//        MainPageObject.waitForElementAndClick(
+//                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
+//                "No back button",
+//                10
+//        );
+//
+//        MainPageObject.waitForElement(
+//                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
+//                "Can't find this topic: " + searchText + " after background",
+//                30
+//        );
+//    }
 }
