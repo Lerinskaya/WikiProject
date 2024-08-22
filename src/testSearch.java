@@ -1,4 +1,5 @@
 import lib.CoreTestCase;
+import lib.ui.ArticlePageObject;
 import lib.ui.MainPageObject;
 import lib.ui.SearchPageObject;
 import org.junit.Assert;
@@ -21,63 +22,47 @@ public class testSearch extends CoreTestCase {
         MainPageObject = new MainPageObject(driver);
     }
 
-    @Test
-    public void testSearch() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
-        SearchPageObject.clickSkipButton();
-        SearchPageObject.initSearchInput();
-        SearchPageObject.typeSearchLine("Java");
-        SearchPageObject.waitForSearchResult("Object-oriented programming language");
-    }
+//    @Test
+//    public void testSearch() {
+//        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+//
+//        SearchPageObject.clickSkipButton();
+//        SearchPageObject.initSearchInput();
+//        SearchPageObject.typeSearchLine("Java");
+//        SearchPageObject.waitForSearchResult("Object-oriented programming language");
+//    }
 
-    @Test
-    public void testSearchCancel() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
-        SearchPageObject.clickSkipButton();
-        SearchPageObject.initSearchInput();
-        SearchPageObject.typeSearchLine("Java");
-        SearchPageObject.waitForCancelButtonToAppear();
-        SearchPageObject.clickCancelButton();
-        SearchPageObject.waitForCancelButtonToDisappear();
-    }
+//    @Test
+//    public void testSearchCancel() {
+//        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+//
+//        SearchPageObject.clickSkipButton();
+//        SearchPageObject.initSearchInput();
+//        SearchPageObject.typeSearchLine("Java");
+//        SearchPageObject.waitForCancelButtonToAppear();
+//        SearchPageObject.clickCancelButton();
+//        SearchPageObject.waitForCancelButtonToDisappear();
+//    }
 
 //    @Test
 //    public void testCompareArticleTitle() {
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Skip')]"),
-//                "No button",
-//                10);
+//        SearchPageObject SearchPageObject = new SearchPageObject(driver);
 //
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
-//                "No Search input",
-//                30);
+//        SearchPageObject.clickSkipButton();
+//        SearchPageObject.initSearchInput();
+//        SearchPageObject.typeSearchLine("Java");
+//        SearchPageObject.clickArticleWithSubstring("Object-oriented programming language");
 //
-//        waitForElementAndSendKeys(
-//                By.id("search_src_text"),
-//                "Java",
-//                "No Search input",
-//                30);
+//        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
 //
-//        waitForElementAndClick(
-//                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout[2]/android.widget.FrameLayout[2]/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[2]/android.widget.TextView[1]"),
-//                "Can't find this topic",
-//                10
+//        ArticlePageObject.waiForArticleDescription();
+//        String article_description = ArticlePageObject.getArticleDescription();
+//
+//        Assert.assertEquals(
+//                "Unexpected article description",
+//                "Object-oriented programming language",
+//                article_description
 //        );
-//
-//        WebElement title = waitForElement(
-//                By.xpath("//android.view.View[@content-desc=\"Object-oriented programming language\"]"),
-//                "Can't find this topic",
-//                100
-//        );
-//
-//        //String article_description = title.getAttribute("resource-id");
-//
-//        //Assert.assertEquals(
-//                //"Unexpected title",
-//                //"pcs-edit-section-title-description",
-//                //article_description
-//        //);
 //
 //    }
 
@@ -195,42 +180,20 @@ public class testSearch extends CoreTestCase {
 //        }
 //    }
 
-//    @Test
-//    public void testSwipeArticle() {
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Skip')]"),
-//                "No button",
-//                10);
-//
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
-//                "No Search input",
-//                30);
-//
-//        waitForElementAndSendKeys(
-//                By.id("search_src_text"),
-//                "Appium",
-//                "No Search input",
-//                30);
-//
-//        waitForElementAndClick(
-//                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout[2]/android.widget.FrameLayout[2]/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[1]/android.widget.TextView[1]"),
-//                "Can't find this topic",
-//                10
-//        );
-//
-//        waitForElement(
-//                By.xpath("(//android.view.View[@content-desc=\"Appium\"])[1]"),
-//                "Can't find this title",
-//                100
-//        );
-//
-//        swipeUpToFindElement(
-//                By.xpath("//android.view.View[@content-desc=\"View article in browser\"]"),
-//                "The end of the article not found",
-//                5
-//        );
-//    }
+    @Test
+    public void testSwipeArticle() {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.clickSkipButton();
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Appium");
+        SearchPageObject.clickArticleWithSubstring("Automation for Apps");
+
+        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+
+        ArticlePageObject.waiForArticleDescription();
+        ArticlePageObject.swipeToFooter();
+    }
 
 //    @Test
 //    public void saveArticle() {

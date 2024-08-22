@@ -51,4 +51,9 @@ public class SearchPageObject extends MainPageObject{
         this.waitForElementAndClick(By.id(SEARCH_CANCEL_BUTTON), "Cannot find search cancel button", 10);
     }
 
+    public void clickArticleWithSubstring(String substring) {
+        String search_result_xpath = getResultSearchElement(substring);
+        this.waitForElementAndClick(By.xpath(search_result_xpath),"Cannot find and click search result with " + substring, 10);
+    }
+
 }
