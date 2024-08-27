@@ -1,7 +1,5 @@
 import lib.CoreTestCase;
-import lib.ui.ArticlePageObject;
-import lib.ui.MainPageObject;
-import lib.ui.SearchPageObject;
+import lib.ui.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -22,8 +20,9 @@ public class testSearch extends CoreTestCase {
         MainPageObject = new MainPageObject(driver);
     }
 
+
 //    @Test
-//    public void testSearch() {
+//    public void testSearchResult() {
 //        SearchPageObject SearchPageObject = new SearchPageObject(driver);
 //
 //        SearchPageObject.clickSkipButton();
@@ -31,7 +30,7 @@ public class testSearch extends CoreTestCase {
 //        SearchPageObject.typeSearchLine("Java");
 //        SearchPageObject.waitForSearchResult("Object-oriented programming language");
 //    }
-
+//
 //    @Test
 //    public void testSearchCancel() {
 //        SearchPageObject SearchPageObject = new SearchPageObject(driver);
@@ -45,6 +44,33 @@ public class testSearch extends CoreTestCase {
 //    }
 
 //    @Test
+//    public void testSaveArticle() {
+//
+//        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+//
+//        SearchPageObject.clickSkipButton();
+//        SearchPageObject.initSearchInput();
+//        SearchPageObject.typeSearchLine("Java");
+//        SearchPageObject.clickArticleWithSubstring("Object-oriented programming language");
+//
+//        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+//
+//        ArticlePageObject.waitForArticleDescription();
+//        String article_title = ArticlePageObject.getArticleDescription();
+//        String folder_name = "Articles";
+//        ArticlePageObject.addArticleToList(folder_name);
+//        ArticlePageObject.closeArticle();
+//
+//        NavigationUI NavigationUI = new NavigationUI(driver);
+//        NavigationUI.clickMyLists();
+//
+//        MyListsPageObject MyListsPageObject = new MyListsPageObject(driver);
+//        MyListsPageObject.openFolderByName(folder_name);
+//        MyListsPageObject.swipeArticleToDelete(article_title);
+//    }
+
+
+//    @Test
 //    public void testCompareArticleTitle() {
 //        SearchPageObject SearchPageObject = new SearchPageObject(driver);
 //
@@ -55,7 +81,7 @@ public class testSearch extends CoreTestCase {
 //
 //        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
 //
-//        ArticlePageObject.waiForArticleDescription();
+//        ArticlePageObject.waitForArticleDescription();
 //        String article_description = ArticlePageObject.getArticleDescription();
 //
 //        Assert.assertEquals(
@@ -195,173 +221,33 @@ public class testSearch extends CoreTestCase {
         ArticlePageObject.swipeToFooter();
     }
 
-//    @Test
-//    public void saveArticle() {
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Skip')]"),
-//                "No button",
-//                10);
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
-//                "No Search input",
-//                10);
-//
-//        waitForElementAndSendKeys(
-//                By.id("search_src_text"),
-//                "Java",
-//                "No Search input",
-//                10);
-//
-//        waitForElementAndClick(
-//                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
-//                "Can't find this topic",
-//                30
-//        );
-//
-//        waitForElement(
-//                By.xpath("//android.view.View[@content-desc=\"Object-oriented programming language\"]"),
-//                "Can't find this topic",
-//                100
-//        );
-//
-//        waitForElementAndClick(
-//                By.id("org.wikipedia:id/page_save"),
-//                "Save option not found",
-//                5
-//        );
-//
-//        waitForElementAndClick(
-//                By.id("org.wikipedia:id/snackbar_action"),
-//                "List button not found",
-//                5
-//        );
-//
-//        waitForElementAndClick(
-//                By.id("org.wikipedia:id/text_input"),
-//                "Search input not found",
-//                5
-//        );
-//
-//        String folderName = "Articles";
-//
-//        waitForElementAndSendKeys(
-//                By.id("org.wikipedia:id/text_input"),
-//                folderName,
-//                "Search input not found",
-//                10);
-//
-//        waitForElementAndClick(
-//                By.id("android:id/button1"),
-//                "Ok button not found",
-//                5
-//        );
-//
-//        waitForElementAndClick(
-//                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
-//                "No back button",
-//                10
-//        );
-//
-//        waitForElementAndClick(
-//                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
-//                "No back button",
-//                10
-//        );
-//
-//        waitForElementAndClick(
-//                By.id("org.wikipedia:id/nav_tab_reading_lists"),
-//                "Save option not found",
-//                5
-//        );
-//
-//        waitForElementAndClick(
-//                By.xpath("//*[@text='"+ folderName +"']"),
-//                "Reading list not found",
-//                5
-//        );
-//
-//        swipeElementToLeft(
-//                By.xpath("//*[@text='Java (programming language)']"),
-//                "Article not found"
-//        );
-//
-//        waitForElementAbsence(
-//                By.xpath("//*[@text='Java (programming language)']"),
-//                "Cannot delete this article",
-//                10
-//        );
-//    }
+    @Test
+    public void testNotEmptySearch() {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
 
-//    @Test
-//    public void testNotEmptySearch() {
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Skip')]"),
-//                "No button",
-//                10);
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
-//                "No Search input",
-//                10);
-//
-//        String searchText = "Linkin Park discography";
-//
-//        waitForElementAndSendKeys(
-//                By.id("search_src_text"),
-//                searchText,
-//                "No Search input",
-//                10);
-//
-//        String searchTextLocator = "//*[@resource-id='org.wikipedia:id/page_list_item_title' and @text='"+ searchText +"']";
-//
-//        waitForElement(
-//                By.xpath(searchTextLocator),
-//                "Cannot find search result",
-//                10
-//        );
-//
-//        int amountOfResults = getAmountOfElements(
-//                By.xpath(searchTextLocator)
-//        );
-//
-//        Assert.assertTrue(
-//                "No search results",
-//                amountOfResults>0
-//        );
-//    }
+        SearchPageObject.clickSkipButton();
+        SearchPageObject.initSearchInput();
+        String search_text = "Linkin Park discography";
+        SearchPageObject.typeSearchLine(search_text);
+        int amount_of_results = SearchPageObject.getAmountOfArticles(search_text);
 
-//    @Test
-//    public void testEmptySearch() {
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Skip')]"),
-//                "No button",
-//                10);
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
-//                "No Search input",
-//                10);
-//
-//        String searchText = "jnskejnlsjlsk";
-//
-//        waitForElementAndSendKeys(
-//                By.id("search_src_text"),
-//                searchText,
-//                "No Search input",
-//                10);
-//
-//        String searchTextLocator = "//*[@resource-id='org.wikipedia:id/page_list_item_title' and @text='"+ searchText +"']";
-//        String emptyResultPage = "//*[@text='No results']";
-//
-//        waitForElement(
-//                By.xpath(emptyResultPage),
-//                "This page is not empty",
-//                10
-//        );
-//
-//        assertElementNotPresent(
-//                By.xpath(searchTextLocator),
-//                "We've found some results by request" + searchText
-//        );
-//    }
+        Assert.assertTrue(
+                "No search results",
+                amount_of_results>0
+        );
+    }
+
+    @Test
+    public void testEmptySearch() {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.clickSkipButton();
+        SearchPageObject.initSearchInput();
+        String search_text = "jnskejnlsjlsk";
+        SearchPageObject.typeSearchLine(search_text);
+        SearchPageObject.waitForEmptyResultsLabel();
+        SearchPageObject.noSearchResults(search_text);
+    }
 
 //    @Test
 //    public void testSaveArticles() {

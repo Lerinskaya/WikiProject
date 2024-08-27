@@ -11,7 +11,8 @@ public class SearchPageObject extends MainPageObject{
             SEARCH_INPUT = "search_src_text",
             SEARCH_CANCEL_BUTTON = "org.wikipedia:id/search_close_btn",
             NAVIGATE_BUTTON_XPATH = "//android.widget.ImageButton[@content-desc=\"Navigate up\"]",
-            SEARCH_RESULT_BY_SUBSTRING_TPL = "//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='{SUBSTRING}']";
+            SEARCH_RESULT_BY_SUBSTRING_TPL = "//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='{SUBSTRING}']",
+            EMPTY_RESULT_ID ="//*[@text='No results']";
 
     public SearchPageObject(AppiumDriver driver) {
         super(driver);
@@ -54,6 +55,33 @@ public class SearchPageObject extends MainPageObject{
     public void clickArticleWithSubstring(String substring) {
         String search_result_xpath = getResultSearchElement(substring);
         this.waitForElementAndClick(By.xpath(search_result_xpath),"Cannot find and click search result with " + substring, 10);
+    }
+
+    public int getAmountOfArticles(String searchText) {
+        String searchTextLocator = "//*[@resource-id='org.wikipedia:id/page_list_item_title' and @text='"+ searchText +"']";
+
+        this.waitForElement(
+                By.xpath(searchTextLocator),
+                "Cannot find search result",
+                10
+        );
+        return this.getAmountOfElements(By.xpath(searchTextLocator));
+    }
+
+    public void waitForEmptyResultsLabel(){
+        this.waitForElement(
+                By.xpath(EMPTY_RESULT_ID),
+                "The result is not empty",
+                10
+                );
+    }
+
+    public void noSearchResults(String searchText){
+        String searchTextLocator = "//*[@resource-id='org.wikipedia:id/page_list_item_title' and @text='"+ searchText +"']";
+        this.assertElementNotPresent(
+                By.xpath(searchTextLocator),
+                "There are should be no results"
+        );
     }
 
 }
