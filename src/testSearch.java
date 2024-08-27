@@ -217,7 +217,7 @@ public class testSearch extends CoreTestCase {
 
         ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
 
-        ArticlePageObject.waiForArticleDescription();
+        ArticlePageObject.waitForArticleDescription();
         ArticlePageObject.swipeToFooter();
     }
 
