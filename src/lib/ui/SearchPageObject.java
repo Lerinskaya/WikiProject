@@ -26,6 +26,10 @@ public class SearchPageObject extends MainPageObject{
         this.waitForElementAndClick(By.xpath(SKIP_BUTTON_XPATH),"Cannot find skip button", 10);
     }
 
+    public void clickBackButton() {
+        this.waitForElementAndClick(By.xpath(NAVIGATE_BUTTON_XPATH),"Cannot find navigation back button", 10);
+    }
+
     public void initSearchInput() {
         this.waitForElementAndClick(By.xpath(SEARCH_INIT_ELEMENT),"Cannot find search input", 10);
         this.waitForElement(By.xpath(SEARCH_INIT_ELEMENT),"Cannot find search input", 10);

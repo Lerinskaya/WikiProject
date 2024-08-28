@@ -206,48 +206,48 @@ public class testSearch extends CoreTestCase {
 //        }
 //    }
 
-    @Test
-    public void testSwipeArticle() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+//    @Test
+//    public void testSwipeArticle() {
+//        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+//
+//        SearchPageObject.clickSkipButton();
+//        SearchPageObject.initSearchInput();
+//        SearchPageObject.typeSearchLine("Appium");
+//        SearchPageObject.clickArticleWithSubstring("Automation for Apps");
+//
+//        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+//
+//        ArticlePageObject.waitForArticleDescription();
+//        ArticlePageObject.swipeToFooter();
+//    }
 
-        SearchPageObject.clickSkipButton();
-        SearchPageObject.initSearchInput();
-        SearchPageObject.typeSearchLine("Appium");
-        SearchPageObject.clickArticleWithSubstring("Automation for Apps");
+//    @Test
+//    public void testNotEmptySearch() {
+//        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+//
+//        SearchPageObject.clickSkipButton();
+//        SearchPageObject.initSearchInput();
+//        String search_text = "Linkin Park discography";
+//        SearchPageObject.typeSearchLine(search_text);
+//        int amount_of_results = SearchPageObject.getAmountOfArticles(search_text);
+//
+//        Assert.assertTrue(
+//                "No search results",
+//                amount_of_results>0
+//        );
+//    }
 
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
-
-        ArticlePageObject.waitForArticleDescription();
-        ArticlePageObject.swipeToFooter();
-    }
-
-    @Test
-    public void testNotEmptySearch() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
-
-        SearchPageObject.clickSkipButton();
-        SearchPageObject.initSearchInput();
-        String search_text = "Linkin Park discography";
-        SearchPageObject.typeSearchLine(search_text);
-        int amount_of_results = SearchPageObject.getAmountOfArticles(search_text);
-
-        Assert.assertTrue(
-                "No search results",
-                amount_of_results>0
-        );
-    }
-
-    @Test
-    public void testEmptySearch() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
-
-        SearchPageObject.clickSkipButton();
-        SearchPageObject.initSearchInput();
-        String search_text = "jnskejnlsjlsk";
-        SearchPageObject.typeSearchLine(search_text);
-        SearchPageObject.waitForEmptyResultsLabel();
-        SearchPageObject.noSearchResults(search_text);
-    }
+//    @Test
+//    public void testEmptySearch() {
+//        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+//
+//        SearchPageObject.clickSkipButton();
+//        SearchPageObject.initSearchInput();
+//        String search_text = "jnskejnlsjlsk";
+//        SearchPageObject.typeSearchLine(search_text);
+//        SearchPageObject.waitForEmptyResultsLabel();
+//        SearchPageObject.noSearchResults(search_text);
+//    }
 
 //    @Test
 //    public void testSaveArticles() {
@@ -426,108 +426,50 @@ public class testSearch extends CoreTestCase {
 //        );
 //    }
 
-//    @Test
-//    public void testChangeScreenOrientation() {
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Skip')]"),
-//                "No button",
-//                10);
-//
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
-//                "No Search input",
-//                10);
-//
-//        String searchText = "Java";
-//
-//        waitForElementAndSendKeys(
-//                By.id("search_src_text"),
-//                searchText,
-//                "No Search input",
-//                10);
-//
-//        waitForElementAndClick(
-//                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
-//                "Can't find this topic: " + searchText,
-//                30
-//        );
-//
-//        String title_before_rotation = waitForElementAndGetAttribute(
-//                By.id("pcs-edit-section-title-description"),
-//                "text",
-//                "Cannot find title description",
-//                5
-//        );
-//
-//        driver.rotate(ScreenOrientation.LANDSCAPE);
-//
-//        String title_after_rotation = waitForElementAndGetAttribute(
-//                By.id("pcs-edit-section-title-description"),
-//                "text",
-//                "Cannot find title description",
-//                5
-//        );
-//
-//        Assert.assertEquals(
-//                "Title descriptions aren't equal after rotation",
-//                title_before_rotation,
-//                title_after_rotation
-//        );
-//
-//        driver.rotate(ScreenOrientation.PORTRAIT);
-//
-//        String title_after_second_rotation = waitForElementAndGetAttribute(
-//                By.id("pcs-edit-section-title-description"),
-//                "text",
-//                "Cannot find title description",
-//                5
-//        );
-//
-//        Assert.assertEquals(
-//                "Title descriptions aren't equal after rotation",
-//                title_before_rotation,
-//                title_after_second_rotation
-//        );
-//    }
+    @Test
+    public void testChangeScreenOrientation() {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
 
-//    @Test
-//    public void testSearchAfterBackground() throws InterruptedException {
-//        MainPageObject.waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Skip')]"),
-//                "No button",
-//                10);
-//
-//        MainPageObject.waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
-//                "No Search input",
-//                10);
-//
-//        String searchText = "Java";
-//
-//        MainPageObject.waitForElementAndSendKeys(
-//                By.id("search_src_text"),
-//                searchText,
-//                "No Search input",
-//                10);
-//
-//        MainPageObject.waitForElement(
-//                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
-//                "Can't find this topic: " + searchText,
-//                30
-//        );
-//
-//        driver.runAppInBackground(5);
-//
-//        MainPageObject.waitForElementAndClick(
-//                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
-//                "No back button",
-//                10
-//        );
-//
-//        MainPageObject.waitForElement(
-//                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='Object-oriented programming language']"),
-//                "Can't find this topic: " + searchText + " after background",
-//                30
-//        );
-//    }
+        SearchPageObject.clickSkipButton();
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.clickArticleWithSubstring("Object-oriented programming language");
+
+        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+
+        String title_before_rotation = ArticlePageObject.getArticleDescription();
+        this.rotateScreenLandscape();
+        String title_after_rotation = ArticlePageObject.getArticleDescription();
+
+        Assert.assertEquals(
+                "Title descriptions aren't equal after rotation",
+                title_before_rotation,
+                title_after_rotation
+        );
+
+        this.rotateScreenPortrait();
+        String title_after_second_rotation = ArticlePageObject.getArticleDescription();
+
+        Assert.assertEquals(
+                "Title descriptions aren't equal after rotation",
+                title_before_rotation,
+                title_after_second_rotation
+        );
+    }
+
+    @Test
+    public void testSearchAfterBackground() throws InterruptedException {
+
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.clickSkipButton();
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.waitForSearchResult("Object-oriented programming language");
+
+        this.backgroundApp(5);
+
+        SearchPageObject.clickBackButton();
+        SearchPageObject.waitForSearchResult("Object-oriented programming language");
+    }
 }

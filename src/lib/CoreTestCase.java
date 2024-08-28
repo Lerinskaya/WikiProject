@@ -28,16 +28,27 @@ public class CoreTestCase extends TestCase {
         capabilities.setCapability("app", "D:/AppiumWiki/WikiProject/apks/org.wikipedia.apk");
 
         driver = new AndroidDriver<>(new URL(AppiumURL), capabilities);
+        this.rotateScreenPortrait();
     }
 
     @Override
     protected void tearDown() throws Exception {
-        driver.rotate(ScreenOrientation.PORTRAIT);
-
         if (driver != null) {
             driver.quit();
         }
 
         super.tearDown();
+    }
+
+    protected void rotateScreenPortrait(){
+        driver.rotate(ScreenOrientation.PORTRAIT);
+    }
+
+    protected void rotateScreenLandscape(){
+        driver.rotate(ScreenOrientation.LANDSCAPE);
+    }
+
+    protected void backgroundApp(int seconds){
+        driver.runAppInBackground(seconds);
     }
 }
