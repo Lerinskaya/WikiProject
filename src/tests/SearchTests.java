@@ -1,96 +1,61 @@
+package tests;
+
 import lib.CoreTestCase;
-import lib.ui.*;
-import org.junit.Assert;
+import lib.ui.SearchPageObject;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.List;
+public class SearchTests extends CoreTestCase {
 
-public class testSearch extends CoreTestCase {
+    @Test
+    public void testSearchResult() {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
 
-    private MainPageObject MainPageObject;
-
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        MainPageObject = new MainPageObject(driver);
+        SearchPageObject.clickSkipButton();
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.waitForSearchResult("Object-oriented programming language");
     }
 
+    @Test
+    public void testSearchCancel() {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
 
-//    @Test
-//    public void testSearchResult() {
-//        SearchPageObject SearchPageObject = new SearchPageObject(driver);
-//
-//        SearchPageObject.clickSkipButton();
-//        SearchPageObject.initSearchInput();
-//        SearchPageObject.typeSearchLine("Java");
-//        SearchPageObject.waitForSearchResult("Object-oriented programming language");
-//    }
-//
-//    @Test
-//    public void testSearchCancel() {
-//        SearchPageObject SearchPageObject = new SearchPageObject(driver);
-//
-//        SearchPageObject.clickSkipButton();
-//        SearchPageObject.initSearchInput();
-//        SearchPageObject.typeSearchLine("Java");
-//        SearchPageObject.waitForCancelButtonToAppear();
-//        SearchPageObject.clickCancelButton();
-//        SearchPageObject.waitForCancelButtonToDisappear();
-//    }
+        SearchPageObject.clickSkipButton();
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.waitForCancelButtonToAppear();
+        SearchPageObject.clickCancelButton();
+        SearchPageObject.waitForCancelButtonToDisappear();
+    }
 
-//    @Test
-//    public void testSaveArticle() {
-//
-//        SearchPageObject SearchPageObject = new SearchPageObject(driver);
-//
-//        SearchPageObject.clickSkipButton();
-//        SearchPageObject.initSearchInput();
-//        SearchPageObject.typeSearchLine("Java");
-//        SearchPageObject.clickArticleWithSubstring("Object-oriented programming language");
-//
-//        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
-//
-//        ArticlePageObject.waitForArticleDescription();
-//        String article_title = ArticlePageObject.getArticleDescription();
-//        String folder_name = "Articles";
-//        ArticlePageObject.addArticleToList(folder_name);
-//        ArticlePageObject.closeArticle();
-//
-//        NavigationUI NavigationUI = new NavigationUI(driver);
-//        NavigationUI.clickMyLists();
-//
-//        MyListsPageObject MyListsPageObject = new MyListsPageObject(driver);
-//        MyListsPageObject.openFolderByName(folder_name);
-//        MyListsPageObject.swipeArticleToDelete(article_title);
-//    }
+    @Test
+    public void testNotEmptySearch() {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
 
+        SearchPageObject.clickSkipButton();
+        SearchPageObject.initSearchInput();
+        String search_text = "Linkin Park discography";
+        SearchPageObject.typeSearchLine(search_text);
+        int amount_of_results = SearchPageObject.getAmountOfArticles(search_text);
 
-//    @Test
-//    public void testCompareArticleTitle() {
-//        SearchPageObject SearchPageObject = new SearchPageObject(driver);
-//
-//        SearchPageObject.clickSkipButton();
-//        SearchPageObject.initSearchInput();
-//        SearchPageObject.typeSearchLine("Java");
-//        SearchPageObject.clickArticleWithSubstring("Object-oriented programming language");
-//
-//        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
-//
-//        ArticlePageObject.waitForArticleDescription();
-//        String article_description = ArticlePageObject.getArticleDescription();
-//
-//        Assert.assertEquals(
-//                "Unexpected article description",
-//                "Object-oriented programming language",
-//                article_description
-//        );
-//
-//    }
+        assertTrue(
+                "No search results",
+                amount_of_results>0
+        );
+    }
+
+    @Test
+    public void testEmptySearch() {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.clickSkipButton();
+        SearchPageObject.initSearchInput();
+        String search_text = "jnskejnlsjlsk";
+        SearchPageObject.typeSearchLine(search_text);
+        SearchPageObject.waitForEmptyResultsLabel();
+        SearchPageObject.noSearchResults(search_text);
+    }
+
 
 
 //    @Test
@@ -206,48 +171,7 @@ public class testSearch extends CoreTestCase {
 //        }
 //    }
 
-//    @Test
-//    public void testSwipeArticle() {
-//        SearchPageObject SearchPageObject = new SearchPageObject(driver);
-//
-//        SearchPageObject.clickSkipButton();
-//        SearchPageObject.initSearchInput();
-//        SearchPageObject.typeSearchLine("Appium");
-//        SearchPageObject.clickArticleWithSubstring("Automation for Apps");
-//
-//        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
-//
-//        ArticlePageObject.waitForArticleDescription();
-//        ArticlePageObject.swipeToFooter();
-//    }
 
-//    @Test
-//    public void testNotEmptySearch() {
-//        SearchPageObject SearchPageObject = new SearchPageObject(driver);
-//
-//        SearchPageObject.clickSkipButton();
-//        SearchPageObject.initSearchInput();
-//        String search_text = "Linkin Park discography";
-//        SearchPageObject.typeSearchLine(search_text);
-//        int amount_of_results = SearchPageObject.getAmountOfArticles(search_text);
-//
-//        Assert.assertTrue(
-//                "No search results",
-//                amount_of_results>0
-//        );
-//    }
-
-//    @Test
-//    public void testEmptySearch() {
-//        SearchPageObject SearchPageObject = new SearchPageObject(driver);
-//
-//        SearchPageObject.clickSkipButton();
-//        SearchPageObject.initSearchInput();
-//        String search_text = "jnskejnlsjlsk";
-//        SearchPageObject.typeSearchLine(search_text);
-//        SearchPageObject.waitForEmptyResultsLabel();
-//        SearchPageObject.noSearchResults(search_text);
-//    }
 
 //    @Test
 //    public void testSaveArticles() {
@@ -425,51 +349,4 @@ public class testSearch extends CoreTestCase {
 //                "Title element is not present on the page"
 //        );
 //    }
-
-    @Test
-    public void testChangeScreenOrientation() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
-
-        SearchPageObject.clickSkipButton();
-        SearchPageObject.initSearchInput();
-        SearchPageObject.typeSearchLine("Java");
-        SearchPageObject.clickArticleWithSubstring("Object-oriented programming language");
-
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
-
-        String title_before_rotation = ArticlePageObject.getArticleDescription();
-        this.rotateScreenLandscape();
-        String title_after_rotation = ArticlePageObject.getArticleDescription();
-
-        Assert.assertEquals(
-                "Title descriptions aren't equal after rotation",
-                title_before_rotation,
-                title_after_rotation
-        );
-
-        this.rotateScreenPortrait();
-        String title_after_second_rotation = ArticlePageObject.getArticleDescription();
-
-        Assert.assertEquals(
-                "Title descriptions aren't equal after rotation",
-                title_before_rotation,
-                title_after_second_rotation
-        );
-    }
-
-    @Test
-    public void testSearchAfterBackground() throws InterruptedException {
-
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
-
-        SearchPageObject.clickSkipButton();
-        SearchPageObject.initSearchInput();
-        SearchPageObject.typeSearchLine("Java");
-        SearchPageObject.waitForSearchResult("Object-oriented programming language");
-
-        this.backgroundApp(5);
-
-        SearchPageObject.clickBackButton();
-        SearchPageObject.waitForSearchResult("Object-oriented programming language");
-    }
 }
