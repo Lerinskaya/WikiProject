@@ -2,6 +2,7 @@ package tests;
 
 import lib.CoreTestCase;
 import lib.ui.ArticlePageObject;
+import lib.ui.NavigationUI;
 import lib.ui.SearchPageObject;
 import org.junit.Test;
 
@@ -50,7 +51,9 @@ public class ChangeAppConditionTests extends CoreTestCase {
 
         this.backgroundApp(5);
 
-        SearchPageObject.clickBackButton();
+        NavigationUI NavigationUI = new NavigationUI(driver);
+        NavigationUI.clickBackButton();
+
         SearchPageObject.waitForSearchResult("Object-oriented programming language");
     }
 }

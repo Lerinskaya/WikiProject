@@ -1,7 +1,11 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
+import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class SearchPageObject extends MainPageObject{
 
@@ -10,9 +14,9 @@ public class SearchPageObject extends MainPageObject{
             SEARCH_INIT_ELEMENT = "//*[contains(@text, 'Search Wikipedia')]",
             SEARCH_INPUT = "search_src_text",
             SEARCH_CANCEL_BUTTON = "org.wikipedia:id/search_close_btn",
-            NAVIGATE_BUTTON_XPATH = "//android.widget.ImageButton[@content-desc=\"Navigate up\"]",
             SEARCH_RESULT_BY_SUBSTRING_TPL = "//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='{SUBSTRING}']",
-            EMPTY_RESULT_ID ="//*[@text='No results']";
+            EMPTY_RESULT_ID ="//*[@text='No results']",
+            LIST_ITEM_ID = "page_list_item_title";
 
     public SearchPageObject(AppiumDriver driver) {
         super(driver);
@@ -24,10 +28,6 @@ public class SearchPageObject extends MainPageObject{
 
     public void clickSkipButton() {
         this.waitForElementAndClick(By.xpath(SKIP_BUTTON_XPATH),"Cannot find skip button", 10);
-    }
-
-    public void clickBackButton() {
-        this.waitForElementAndClick(By.xpath(NAVIGATE_BUTTON_XPATH),"Cannot find navigation back button", 10);
     }
 
     public void initSearchInput() {
@@ -88,4 +88,39 @@ public class SearchPageObject extends MainPageObject{
         );
     }
 
+    public void clearSearchInput() {
+        this.waitForElementAndClear(
+                By.id(SEARCH_INPUT),
+                "No Search input",
+                30);
+    }
+
+    public void checkInputText(String element_text) {
+        this.assertElementHasText(
+                By.xpath(SEARCH_INIT_ELEMENT),
+                element_text,
+                "Text was not found",
+                10
+        );
+    }
+
+    public void checkTitleText(String element_text) {
+        this.assertElementHasText(
+                By.id(LIST_ITEM_ID),
+                element_text,
+                "Text was not found",
+                10
+        );
+    }
+
+    public void checkSearchResultsContainText(String input_text) {
+        List<WebElement> searchResults = driver.findElements(By.id(LIST_ITEM_ID));
+
+        Assert.assertFalse("Search results not found", searchResults.isEmpty());
+
+        for (WebElement result : searchResults) {
+            String resultText = result.getText().toLowerCase();
+            Assert.assertTrue("Search result does not contain '" + input_text + "'", resultText.contains(input_text.toLowerCase()));
+        }
+    }
 }

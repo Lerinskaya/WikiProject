@@ -54,4 +54,22 @@ public class MyListsPageObject extends MainPageObject{
                 10
         );
     }
+
+    public void waitForArticlePresent(String article_title) {
+        this.assertElementPresent(
+                By.xpath("//*[@text='"+ article_title +"']"),
+                "List is empty"
+        );
+
+        this.waitForElementAndClick(
+                By.xpath("//*[@text='"+ article_title +"']"),
+                "The article not found",
+                5
+        );
+
+        this.assertElementPresent(
+                By.xpath("//*[@text='"+ article_title +"']"),
+                "Title doesn't match"
+        );
+    }
 }
