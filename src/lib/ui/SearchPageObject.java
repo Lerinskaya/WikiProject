@@ -7,16 +7,16 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class SearchPageObject extends MainPageObject{
+public abstract class SearchPageObject extends MainPageObject{
 
-    private static final String
-            SKIP_BUTTON_XPATH = "xpath://*[contains(@text, 'Skip')]",
-            SEARCH_INIT_ELEMENT = "xpath://*[contains(@text, 'Search Wikipedia')]",
-            SEARCH_INPUT = "id:search_src_text",
-            SEARCH_CANCEL_BUTTON = "id:org.wikipedia:id/search_close_btn",
-            SEARCH_RESULT_BY_SUBSTRING_TPL = "xpath://*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='{SUBSTRING}']",
-            EMPTY_RESULT ="xpath://*[@text='No results']",
-            LIST_ITEM_ID = "id:page_list_item_title";
+    protected static String
+            SKIP_BUTTON_XPATH,
+            SEARCH_INIT_ELEMENT,
+            SEARCH_INPUT,
+            SEARCH_CANCEL_BUTTON,
+            SEARCH_RESULT_BY_SUBSTRING_TPL,
+            EMPTY_RESULT,
+            LIST_ITEM_ID;
 
     public SearchPageObject(AppiumDriver driver) {
         super(driver);
@@ -62,7 +62,8 @@ public class SearchPageObject extends MainPageObject{
     }
 
     public int getAmountOfArticles(String searchText) {
-        String searchTextLocator = "//*[@resource-id='org.wikipedia:id/page_list_item_title' and @text='"+ searchText +"']";
+//        String searchTextLocator = "//*[@resource-id='org.wikipedia:id/page_list_item_title' and @text='"+ searchText +"']";
+        String searchTextLocator = SEARCH_RESULT_BY_SUBSTRING_TPL.replace("{SUBSTRING}", searchText);
 
         this.waitForElement(
                 searchTextLocator,
@@ -81,7 +82,7 @@ public class SearchPageObject extends MainPageObject{
     }
 
     public void noSearchResults(String searchText){
-        String searchTextLocator = "//*[@resource-id='org.wikipedia:id/page_list_item_title' and @text='"+ searchText +"']";
+        String searchTextLocator = SEARCH_RESULT_BY_SUBSTRING_TPL.replace("{SUBSTRING}", searchText);
         this.assertElementNotPresent(
                 searchTextLocator,
                 "There are should be no results"

@@ -2,13 +2,13 @@ package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
 
-public class WelcomePageObject extends MainPageObject{
+public abstract class WelcomePageObject extends MainPageObject{
 
-    private static final String
-    MAIN_TITLE_ID = "id:Свободная энциклопедия",
-    NEXT_BUTTON_XPATH = "xpath://XCUIElementTypeStaticText[@name=\"Далее\"]",
-    START_BUTTON_XPATH = "xpath://XCUIElementTypeButton[@name=\"Начать\"]",
-    HELP_TEXT_ID = "id:Помогите сделать это приложение лучше";
+    protected static String
+    MAIN_TITLE_ID,
+    NEXT_BUTTON_XPATH,
+            SKIP_BUTTON_XPATH,
+    HELP_TEXT_ID;
 
     public WelcomePageObject(AppiumDriver driver) {
         super(driver);
@@ -22,8 +22,8 @@ public class WelcomePageObject extends MainPageObject{
         this.waitForElementAndClick(NEXT_BUTTON_XPATH, "Cannot find next button", 10);
     }
 
-    public void clickGetStartedButton() {
-        this.waitForElementAndClick(START_BUTTON_XPATH, "Cannot find next button", 10);
+    public void clickSkip() {
+        this.waitForElementAndClick(SKIP_BUTTON_XPATH, "Cannot find next button", 10);
     }
 
     public void waitForHelpText() {

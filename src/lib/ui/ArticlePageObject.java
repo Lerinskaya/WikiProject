@@ -1,20 +1,21 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
+import lib.Platform;
 import org.openqa.selenium.WebElement;
 
-public class ArticlePageObject extends MainPageObject{
+public abstract class ArticlePageObject extends MainPageObject{
 
-    private static final String
-        ARTICLE_ID = "id:pcs-edit-section-title-description",
-        FOOTER_ELEMENT = "xpath://android.view.View[@content-desc=\"View article in browser\"]",
-        OPTION_BUTTON_ID = "id:org.wikipedia:id/page_save",
-        LIST_BUTTON_ID ="id:org.wikipedia:id/snackbar_action",
-        LIST_INPUT_ID = "id:org.wikipedia:id/text_input",
-        OK_BUTTON_ID = "id:android:id/button1",
-        BACK_BUTTON = "xpath://android.widget.ImageButton[@content-desc=\"Navigate up\"]",
-        ARTICLE_DESCRIPTION_ID = "id:pcs-edit-section-title-description",
-        SAVE_TAB_ID = "id:org.wikipedia:id/nav_tab_reading_lists";
+    protected static String
+        ARTICLE_ID,
+        FOOTER_ELEMENT,
+        OPTION_BUTTON_ID,
+        LIST_BUTTON_ID,
+        LIST_INPUT_ID,
+        OK_BUTTON_ID,
+        BACK_BUTTON,
+        ARTICLE_DESCRIPTION_ID,
+        SAVE_TAB_ID;
 
     public ArticlePageObject(AppiumDriver driver) {
         super(driver);
@@ -26,11 +27,18 @@ public class ArticlePageObject extends MainPageObject{
 
     public String getArticleDescription() {
         WebElement title_description = waitForArticleDescription();
-        return title_description.getAttribute("text");
+        if (Platform.getInstance().isAndroid()) {
+            return title_description.getAttribute("text");
+        }
+        return title_description.getAttribute("name");
     }
 
     public void swipeToFooter() {
-        this.swipeUpToFindElement(FOOTER_ELEMENT, "Cannot find the end of article", 10);
+        if (Platform.getInstance().isAndroid()) {
+            this.swipeUpToFindElement(FOOTER_ELEMENT, "Cannot find the end of article", 20);
+        } else {
+            this.swipeUpTillElementAppear(FOOTER_ELEMENT, "Cannot find the end of article", 20);
+        }
     }
 
     public void addArticleToList(String folder_name) {
