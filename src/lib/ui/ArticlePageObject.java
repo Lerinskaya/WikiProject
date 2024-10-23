@@ -15,7 +15,9 @@ public abstract class ArticlePageObject extends MainPageObject{
         OK_BUTTON_ID,
         BACK_BUTTON,
         ARTICLE_DESCRIPTION_ID,
-        SAVE_TAB_ID;
+        SAVE_TAB_ID,
+        CREATE_BUTTON,
+        CANCEL_BUTTON;
 
     public ArticlePageObject(AppiumDriver driver) {
         super(driver);
@@ -73,6 +75,38 @@ public abstract class ArticlePageObject extends MainPageObject{
         );
     }
 
+    public void addArticlesToMySaved(String folder_name) {
+        this.waitForElementAndClick(
+                OPTION_BUTTON_ID,
+                "Save option not found",
+                5
+        );
+
+        this.waitForElementAndClick(
+                LIST_BUTTON_ID,
+                "List button not found",
+                5
+        );
+
+        this.waitForElementAndClick(
+                CREATE_BUTTON,
+                "Create button not found",
+                5
+        );
+
+        this.waitForElementAndSendKeys(
+                LIST_INPUT_ID,
+                folder_name,
+                "Search input not found",
+                10);
+
+        this.waitForElementAndClick(
+                OK_BUTTON_ID,
+                "Ok button not found",
+                5
+        );
+    }
+
     public void addArticleToExistingList(String folder_name) throws InterruptedException {
         Thread.sleep(2000);
         this.waitForElementAndClick(
@@ -101,11 +135,19 @@ public abstract class ArticlePageObject extends MainPageObject{
                 10
         );
 
-        this.waitForElementAndClick(
-                BACK_BUTTON,
-                "No back button",
-                10
-        );
+        if(Platform.getInstance().isAndroid()){
+            this.waitForElementAndClick(
+                    BACK_BUTTON,
+                    "No back button",
+                    10
+            );
+        } else {
+            this.waitForElementAndClick(
+                    CANCEL_BUTTON,
+                    "No cancel button",
+                    10
+            );
+        }
     }
 
     public void checkArticleDescription() {
@@ -128,4 +170,5 @@ public abstract class ArticlePageObject extends MainPageObject{
                 5
         );
     }
+
 }

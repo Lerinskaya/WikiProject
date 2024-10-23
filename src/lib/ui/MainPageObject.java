@@ -5,15 +5,18 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import lib.Platform;
 
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import java.util.Arrays;
 
 public class MainPageObject {
 
@@ -86,6 +89,22 @@ public class MainPageObject {
         swipeUp(200);
     }
 
+    public void clickElementToTheRightUpperCorner(String locator, String error_message) {
+        WebElement element = this.waitForElement(locator, error_message);
+        int right_x = element.getLocation().getX();
+        int upper_y = element.getLocation().getY();
+        int lower_y = upper_y + element.getSize().getHeight();
+        int middle_y = (upper_y + lower_y)/2;
+        int width = element.getSize().getWidth();
+
+        int point_to_click_x = (right_x + width) - 3;
+        int point_to_click_y = middle_y;
+
+        new TouchAction(driver)
+                .tap(PointOption.point(point_to_click_x, point_to_click_y))
+                .perform();
+    }
+
     public void swipeUpToFindElement(String locator, String errorMessage, int maxSwipes){
 
         By by = this.getLocatorByString(locator);
@@ -109,15 +128,44 @@ public class MainPageObject {
         int lower_x = upper_y + element.getSize().getHeight();
         int middle_y = (upper_y + lower_x)/2;
 
-        TouchAction action = new TouchAction(driver);
-        action
-                .press(PointOption.point(right_x, middle_y))
-                .waitAction(WaitOptions.waitOptions(Duration.ofMillis(300)))
-                .moveTo(PointOption.point(right_x, middle_y))
-                .release()
-                .perform();
-
+        if(Platform.getInstance().isAndroid()) {
+            TouchAction action = new TouchAction(driver);
+            action.press(PointOption.point(right_x, middle_y));
+            action.waitAction(WaitOptions.waitOptions(Duration.ofMillis(300)));
+            action.moveTo(PointOption.point(right_x, middle_y));
+            action.moveTo(PointOption.point(right_x, middle_y));
+            action.release();
+            action.perform();
+        } else {
+            new Actions(driver)
+                    .moveToElement(element, right_x, middle_y)
+                    .clickAndHold()
+                    .moveByOffset(-1 * element.getSize().getWidth(), 0)
+                    .release()
+                    .perform();
+        }
     }
+
+
+//    public void swipeElementToLeft(String locator, String errorMessage) {
+//        WebElement element = waitForElement(locator, errorMessage);
+//
+//        int leftX = element.getLocation().getX();
+//        int rightX = leftX + element.getSize().getWidth();
+//        int upperY = element.getLocation().getY();
+//        int middleY = upperY + (element.getSize().getHeight() / 2); // Центр по Y
+//
+//        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+//        Sequence swipe = new Sequence(finger, 1);
+//        swipe.addAction(finger.createPointerMove(Duration.ofMillis(0), PointerInput.Origin.viewport(), rightX, middleY));
+//        swipe.addAction(finger.createPointerDown(0));
+//        swipe.addAction(new Pause(finger, Duration.ofMillis(300)));
+//        swipe.addAction(finger.createPointerMove(Duration.ofMillis(500), PointerInput.Origin.viewport(), leftX, middleY));
+//        swipe.addAction(finger.createPointerUp(0));
+
+//        driver.perform(Arrays.asList(swipe));
+//    }
+
 
     public void swipeUpTillElementAppear(String locator, String error_message, int max_swipes) {
         int swipes = 0;

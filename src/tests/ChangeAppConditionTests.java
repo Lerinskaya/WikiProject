@@ -5,6 +5,7 @@ import lib.ui.ArticlePageObject;
 import lib.ui.NavigationUI;
 import lib.ui.SearchPageObject;
 import lib.ui.factories.ArticlePageObjectFactory;
+import lib.ui.factories.NavigationUIFactory;
 import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 
@@ -53,7 +54,7 @@ public class ChangeAppConditionTests extends CoreTestCase {
 
         this.backgroundApp(5);
 
-        NavigationUI NavigationUI = new NavigationUI(driver);
+        NavigationUI NavigationUI = NavigationUIFactory.get(driver);
         NavigationUI.clickBackButton();
 
         SearchPageObject.waitForSearchResult("Object-oriented programming language");

@@ -1,13 +1,16 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
+import lib.Platform;
 import org.openqa.selenium.By;
 
-public class MyListsPageObject extends MainPageObject{
+abstract public class MyListsPageObject extends MainPageObject{
 
-    private static final String
-            FOLDER_NAME_TPL = "xpath://*[@text='{FOLDER_NAME}']",
-            ARTICLE_TITLE_TPL = "xpath://*[@text='{TITLE}']";
+     protected static String
+            FOLDER_NAME_TPL,
+            ARTICLE_TITLE_TPL,
+            DELETE_BUTTON,
+            UNSAVE_BUTTON;
 
     private static String getFolderXpathByName(String folder_name){
         return FOLDER_NAME_TPL.replace("{FOLDER_NAME}", folder_name);
@@ -32,7 +35,7 @@ public class MyListsPageObject extends MainPageObject{
     }
 
     public void waitForArticleToAppear(String article_title){
-        String article_xpath = getFolderXpathByName(article_title);
+        String article_xpath = getArticleXpathByTitle(article_title);
         this.waitForElement(
                 article_xpath,
                 "Cannot find saved article",
@@ -42,11 +45,21 @@ public class MyListsPageObject extends MainPageObject{
 
     public void swipeArticleToDelete(String article_title) {
         this.waitForArticleToAppear(article_title);
-        String article_xpath = getFolderXpathByName(article_title);
+        String article_xpath = getArticleXpathByTitle(article_title);
         this.swipeElementToLeft(
                 article_xpath,
                 "Article not found"
         );
+
+        if(Platform.getInstance().isIOS()) {
+            this.clickElementToTheRightUpperCorner(article_xpath, "Cannot find saved article");
+
+            this.waitForElementAndClick(
+                    UNSAVE_BUTTON,
+                    "Cannot find unsave button",
+                    20
+            );
+        }
 
         this.waitForElementAbsence(
                 article_xpath,

@@ -3,6 +3,7 @@ package tests;
 import lib.CoreTestCase;
 import lib.ui.NavigationUI;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.NavigationUIFactory;
 import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 
@@ -66,7 +67,7 @@ public class SearchTests extends CoreTestCase {
           SearchPageObject.typeSearchLine("Java");
           SearchPageObject.clearSearchInput();
 
-          NavigationUI NavigationUI = new NavigationUI(driver);
+          NavigationUI NavigationUI = NavigationUIFactory.get(driver);
           NavigationUI.clickBackButton();
           NavigationUI.backButtonIsAbsent();
       }
@@ -89,7 +90,7 @@ public class SearchTests extends CoreTestCase {
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.checkTitleText("Java");
 
-        NavigationUI NavigationUI = new NavigationUI(driver);
+        NavigationUI NavigationUI = NavigationUIFactory.get(driver);
         NavigationUI.clickBackButton();
         NavigationUI.backButtonIsAbsent();
     }
