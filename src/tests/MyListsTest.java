@@ -62,25 +62,35 @@ public class MyListsTest extends CoreTestCase {
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForArticleDescription();
         String first_article_title = ArticlePageObject.getArticleDescription();
-        ArticlePageObject.addArticleToList(folder_name);
+        if(Platform.getInstance().isAndroid()){
+            ArticlePageObject.addArticleToList(folder_name);
+        } else {
+            ArticlePageObject.addArticlesToMySaved(folder_name);
+        }
 
         NavigationUI NavigationUI = NavigationUIFactory.get(driver);
         NavigationUI.clickBackButton();
 
         SearchPageObject.clickArticleWithSubstring("High-level programming language");
-        ArticlePageObject.waitForArticleDescription();
-        String second_article_title = ArticlePageObject.getArticleDescription();
+        ArticlePageObject.waitForArticleTitle();
+        String second_article_title = ArticlePageObject.getArticleTitle();
+
         ArticlePageObject.addArticleToExistingList(folder_name);
 
         NavigationUI.clickBackButton();
-        NavigationUI.clickBackButton();
+        if(Platform.getInstance().isAndroid()){
+            NavigationUI.clickBackButton();
+        } else {
+            NavigationUI.clickCancelButton();
+        }
+
         NavigationUI.clickMyLists();
 
         MyListsPageObject MyListsPageObject = MyListsPageObjectFactory.get(driver);
-        MyListsPageObject.openFolderByName(folder_name);
+        if(Platform.getInstance().isAndroid()){
+            MyListsPageObject.openFolderByName(folder_name);
+        }
         MyListsPageObject.swipeArticleToDelete(first_article_title);
         MyListsPageObject.waitForArticlePresent(second_article_title);
     }
-
-
 }

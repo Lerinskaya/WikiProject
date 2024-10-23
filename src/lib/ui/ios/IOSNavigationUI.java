@@ -7,7 +7,8 @@ public class IOSNavigationUI extends NavigationUI {
     static {
         SAVE_OPTION_ID = "id:tabbar-save";
         CLOSE_BUTTON = "id:Close";
-        NAVIGATE_BUTTON_XPATH = "xpath://android.widget.ImageButton[@content-desc=\"Navigate up\"]";
+        NAVIGATE_BUTTON_XPATH = "id:Back";
+        CANCEL_BUTTON = "xpath://XCUIElementTypeStaticText[@name=\"Cancel\"]";
     }
 
     public IOSNavigationUI(AppiumDriver driver) {

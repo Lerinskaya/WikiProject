@@ -69,20 +69,39 @@ abstract public class MyListsPageObject extends MainPageObject{
     }
 
     public void waitForArticlePresent(String article_title) {
-        this.assertElementPresent(
-                "//*[@text='"+ article_title +"']",
-                "List is empty"
-        );
 
-        this.waitForElementAndClick(
-                "//*[@text='"+ article_title +"']",
-                "The article not found",
-                5
-        );
+        if(Platform.getInstance().isAndroid()) {
+            this.assertElementPresent(
+                    "xpath://*[@text='"+ article_title +"']",
+                    "List is empty"
+            );
 
-        this.assertElementPresent(
-                "//*[@text='"+ article_title +"']",
-                "Title doesn't match"
-        );
+            this.waitForElementAndClick(
+                    "xpath://*[@text='"+ article_title +"']",
+                    "The article not found",
+                    5
+            );
+
+            this.assertElementPresent(
+                    "xpath://*[@text='"+ article_title +"']",
+                    "Title doesn't match"
+            );
+        } else {
+            this.assertElementPresent(
+                    "xpath://*[@name='"+ article_title +"']",
+                    "List is empty"
+            );
+
+            this.waitForElementAndClick(
+                    "xpath://*[@name='"+ article_title +"']",
+                    "The article not found",
+                    5
+            );
+
+            this.assertElementPresent(
+                    "xpath://*[@name='"+ article_title +"']",
+                    "Title doesn't match"
+            );
+        }
     }
 }

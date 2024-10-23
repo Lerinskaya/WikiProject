@@ -2,12 +2,12 @@ package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
 import lib.Platform;
-import org.openqa.selenium.By;
 
 abstract public class NavigationUI extends MainPageObject{
     protected static String
         SAVE_OPTION_ID,
         CLOSE_BUTTON,
+            CANCEL_BUTTON,
             NAVIGATE_BUTTON_XPATH;
 
     public NavigationUI(AppiumDriver driver) {
@@ -40,6 +40,15 @@ abstract public class NavigationUI extends MainPageObject{
                 NAVIGATE_BUTTON_XPATH,
                 "Cannot find navigation back button",
                 10);
+    }
+
+    public void clickCancelButton() {
+        this.waitForElementAndClick(
+                CANCEL_BUTTON,
+                "No cancel button",
+                10
+        );
+
     }
 
     public void backButtonIsAbsent() {

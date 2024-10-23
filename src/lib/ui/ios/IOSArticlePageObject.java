@@ -9,7 +9,8 @@ public class IOSArticlePageObject extends ArticlePageObject {
         FOOTER_ELEMENT = "xpath://XCUIElementTypeStaticText[@name='View article in browser']";
         OPTION_BUTTON_ID = "id:Save for later";
         LIST_BUTTON_ID ="id:Add “Java (programming language)” to a reading list?";
-//        CREATE_NEW_LIST_BUTTON = "id://XCUIElementTypeStaticText[@name='Create a new list']";
+        SECOND_LIST_BUTTON_ID ="id:Add “JavaScript” to a reading list?";
+        ARTICLE_TITLE = "id:JavaScript";
         LIST_INPUT_ID = "xpath://XCUIElementTypeTextField[@value=\"reading list title\"]";
         OK_BUTTON_ID = "xpath://XCUIElementTypeStaticText[@name=\"Create reading list\"]";
         BACK_BUTTON = "xpath://XCUIElementTypeButton[@name=\"Back\"]";

@@ -12,11 +12,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import lib.Platform;
 
 import java.time.Duration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
-
-import java.util.Arrays;
 
 public class MainPageObject {
 

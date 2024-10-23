@@ -8,9 +8,11 @@ public abstract class ArticlePageObject extends MainPageObject{
 
     protected static String
         ARTICLE_ID,
+            ARTICLE_TITLE,
         FOOTER_ELEMENT,
         OPTION_BUTTON_ID,
         LIST_BUTTON_ID,
+            SECOND_LIST_BUTTON_ID,
         LIST_INPUT_ID,
         OK_BUTTON_ID,
         BACK_BUTTON,
@@ -27,8 +29,20 @@ public abstract class ArticlePageObject extends MainPageObject{
         return this.waitForElement(ARTICLE_ID, "Cannot find an article", 10);
     }
 
+    public WebElement waitForArticleTitle() {
+        return this.waitForElement(ARTICLE_TITLE, "Cannot find an article", 10);
+    }
+
     public String getArticleDescription() {
         WebElement title_description = waitForArticleDescription();
+        if (Platform.getInstance().isAndroid()) {
+            return title_description.getAttribute("text");
+        }
+        return title_description.getAttribute("name");
+    }
+
+    public String getArticleTitle() {
+        WebElement title_description = waitForArticleTitle();
         if (Platform.getInstance().isAndroid()) {
             return title_description.getAttribute("text");
         }
@@ -115,18 +129,35 @@ public abstract class ArticlePageObject extends MainPageObject{
                 5
         );
 
-        this.waitForElementAndClick(
-                LIST_BUTTON_ID,
-                "List button not found",
-                15
-        );
+        if(Platform.getInstance().isAndroid()){
+            this.waitForElementAndClick(
+                    LIST_BUTTON_ID,
+                    "List button not found",
+                    15
+            );
+        } else {
+            this.waitForElementAndClick(
+                    SECOND_LIST_BUTTON_ID,
+                    "List button not found",
+                    15
+            );
+        }
 
-        this.waitForElementAndClick(
-                "//*[@text='"+ folder_name +"']",
-                folder_name + "folder not found",
-                10
-        );
+        if(Platform.getInstance().isAndroid()){
+            this.waitForElementAndClick(
+                    "xpath://*[@text='"+ folder_name +"']",
+                    folder_name + "folder not found",
+                    10
+            );
+        } else {
+            this.waitForElementAndClick(
+                    "xpath://*[@name='"+ folder_name +"']",
+                    folder_name + "folder not found",
+                    10
+            );
+        }
     }
+
 
     public void closeArticle() {
         this.waitForElementAndClick(
